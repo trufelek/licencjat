@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'Joystix Monospace';
+  src: url('joystix.eot') format('embedded-opentype'), 
+       url('joystix.woff2') format('woff2'),
+       url('joystix.woff') format('woff'), 
+       url('joystix.ttf')  format('truetype'),
+}
+
+body{position:relative; height:100px; margin: 0 auto; font:24px "Joystix Monospace", monospace;}
+div#game{position: relative; margin:50px auto; width: 800px; height: 550px; overflow: hidden; background: #FF9999; -webkit-transform:translateZ(0); -moz-transform:translateZ(0); transform:matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)}
+div#game div#score{position:absolute; top:15px; left:15px;}
+div#game div#board{position:relative; width:1600px; height:550px;}
+div#game div#board div{position:absolute;}
+div#game div#board div.background{top:0; left:0; overflow:hidden; width:800px; height:550px; background:#B7FBE4;}
+div#game div#board div.tile{top:0; left:0; width:80px; height:80px; background-color:pink; border:1px solid yellowgreen;}
+div#game div#board div.tile.spikes{background:url("../img/spikes.png") no-repeat 0 0; border:none;}
+div#game div#board div.tile.diamonds{background-color:#FF6666; border-radius:100px;}
+div#game div#board div#player{z-index:999; left:0; top:400px; width:80px; height:80px; background-color:yellowgreen; border-radius:100px;}
