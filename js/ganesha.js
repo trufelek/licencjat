@@ -4,8 +4,10 @@ $(function(){
 		width: 800,
 		keyboard: [],
 		points: 0,
+		collision: false,
+		fall: false,
 		collide: function(player){
-			var collision = false;
+			game.collision = false;
 			$('.tile').each(function(i, tile){
 				var tile_x = $(tile).position().left;
 				var tile_y = $(tile).position().top;
@@ -18,24 +20,19 @@ $(function(){
 						player.loot(tile);
 					}else if($(tile).hasClass('spikes')){
 						console.log('spikes!');
-						player.die();
 					}else{
-						collision = true;
+						game.collision = true;
 						console.log('collide!');
+						return false;
 					}
-				}else if((player.x + player.w > tile_x) && (player.x < tile_x + tile_w) && (player.x + 0.5 * player.w > tile_x) && (player.y + player.h == tile_y)){
-					if($(tile).hasClass('spikes')){
-						player.div.animate({left: '+=40', top: '+=80'}, 1000);
-						player.die();
-					}else{
-						// player.move('fall');
-						// player.die();
-					}
+				}else if((player.x + player.w > tile_x) && (player.x < tile_x + tile_w) && (player.y +  player.h < tile_y)){
+					game.fall = true;
+					console.log('fall!');
+					return false;
 				}
 				
 				
 			});
-			return collision;
 		}
 	};
 
@@ -65,21 +62,21 @@ $(function(){
 					if( player.x > 400 && $('div.last').position().left === 720){
 
 						player.x -= 10;
-						var collision = game.collide(player);
-						if(!collision){
+						game.collide(player);
+						if(!game.collision){
 							player.div.css('left', player.x + 'px');
 						}
 			   		}else if(player.x == 400 && $('div.first').position().left < 0){
 			   			$('.tile').css('left', '+=40px');
-			   			var collision = game.collide(player);
-			   			if(collision){
+			   			game.collide(player);
+			   			if(game.collision){
 			   				$('.tile').css('left', '-=40px');
 			   			}
 			   		}else{
 			   			player.x -= 10;
 			   			if(player.x > 0){
 			   				game.collide(player);
-			   				if(!collision){
+			   				if(!game.collision){
 			   					player.div.css('left', player.x + 'px');
 			   				}
 			   			}
@@ -91,15 +88,15 @@ $(function(){
 				case 'right':{
 			   		if(player.x == 400 && $('div.last').position().left > 720){
 			   			$('.tile').css('left', '-=40px');
-			   			var collision =  game.collide(player);
-			   			if(collision){
+			   			game.collide(player);
+			   			if(game.collision){
 			   				$('.tile').css('left', '+=40px');
 			   			}
 					}else{
 						player.x += 10;
 						if(player.x < 720){
-							var collision =  game.collide(player);
-							if(!collision){
+							game.collide(player);
+							if(!game.collision){
 								player.div.css('left', player.x + 'px');
 							}
 						}
@@ -108,19 +105,24 @@ $(function(){
 				break;
 				//skok
 				case 'jump':{
+					player.div.animate().stop();
 					player.y -= 80;
-					var collision = game.collide(player);
-					if(!collision){
-						player.div.css('top', player.y + 'px');	
+					game.collide(player);
+					if(!game.collision){
+						player.div.animate({top: player.y});
+						if(game.fall){
+							player.move('fall');
+						}
 					}
 				}
 				break;
 				//spadanie
 				case 'fall':{
-					player.y += 80;
-					var collision = game.collide(player);
-					if(!collision){
-						player.div.css('top', player.y + 'px');
+					console.log('falling');
+					player.div.animate({top: player.y});
+					game.collide(player);
+					if(!game.collision){
+						player.y -= 80;
 					}
 				}
 				break;
