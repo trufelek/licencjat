@@ -6,6 +6,7 @@ $(function(){
 		points: 0,
 		collision: false,
 		fall: false,
+		inactive: true,
 		collide: function(player){
 			game.collision = false;
 			$('.tile').each(function(i, tile){
@@ -67,10 +68,10 @@ $(function(){
 							player.div.css('left', player.x + 'px');
 						}
 			   		}else if(player.x == 400 && $('div.first').position().left < 0){
-			   			$('.tile').css('left', '+=40px');
+			   			$('.tile').css('left', '+=20px');
 			   			game.collide(player);
 			   			if(game.collision){
-			   				$('.tile').css('left', '-=40px');
+			   				$('.tile').css('left', '-=20px');
 			   			}
 			   		}else{
 			   			player.x -= 10;
@@ -87,10 +88,10 @@ $(function(){
 				//ruch w prawo
 				case 'right':{
 			   		if(player.x == 400 && $('div.last').position().left > 720){
-			   			$('.tile').css('left', '-=40px');
+			   			$('.tile').css('left', '-=20px');
 			   			game.collide(player);
 			   			if(game.collision){
-			   				$('.tile').css('left', '+=40px');
+			   				$('.tile').css('left', '+=20px');
 			   			}
 					}else{
 						player.x += 10;
@@ -106,7 +107,7 @@ $(function(){
 				//skok
 				case 'jump':{
 					player.div.animate().stop();
-					player.y -= 80;
+					player.y -= 180;
 					game.collide(player);
 					if(!game.collision){
 						player.div.animate({top: player.y});
@@ -122,7 +123,7 @@ $(function(){
 					player.div.animate({top: player.y});
 					game.collide(player);
 					if(!game.collision){
-						player.y -= 80;
+						player.y -= 180;
 					}
 				}
 				break;
@@ -145,8 +146,8 @@ $(function(){
 				 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				 [0,0,0,0,0,0,3,4,0,0,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0,0],
 				 [0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,3,0,3,3,0,3,0,3,0,0],
-				 [0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,4,0],
-				 [1,1,2,2,1,1,1,1,2,1,1,1,2,2,1,1,1,1,1,1,2,2,2,2,1,1]];
+				 [0,0,2,2,4,0,0,0,2,0,0,0,2,0,0,0,0,4,0,0,2,0,0,0,4,2],
+				 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1]];
 
 	$.each(level, function(i, e){
 		$.each(e, function(j, tiles){
@@ -180,27 +181,27 @@ $(function(){
 	});
 	
 
-	// funckja obsługi stanu klawiatury
-	 $(document).keydown(function(e){
-
-	//strzałka w lewo
-	 	if(game.keyboard[37]) { 
+	var gameLoop = function(){
+		if(game.keyboard[37]) { 
 	   		player.move('left');
-	   		//console.log(player.x);
+	   		game.inactive = false;
 	 	}
 	 	//strzałka w prawo
 	 	if(game.keyboard[39]) { 
 	   		player.move('right');
-	   		//console.log(player.x);
+	   		game.inactive = false;
 	 	}
 	 	//strzałka w górę
 	 	if(game.keyboard[38]) { 
 	   		player.move('jump');
+	   		game.inactive = false;
 	   	}
-	 	//strzałka w dół
-	 	if(game.keyboard[40]) { 
-	 		player.move('fall');
+	 	
+	 	if(game.inactive){
+	 		player.move('inactive');
 	 	}
-	});
+	}
+
+	setInterval(gameLoop, 30);
 	
 });
