@@ -6,9 +6,13 @@ $(function(){
 		points: 0,
 		collision: false,
 		fall: false,
-		inactive: true,
+		climb: false,
+		platform: false,
 		collide: function(player){
 			game.collision = false;
+			game.climb = false;
+			game.platform = false;
+			game.fall = false;
 			$('.tile').each(function(i, tile){
 				var tile_x = $(tile).position().left;
 				var tile_y = $(tile).position().top;
@@ -21,15 +25,24 @@ $(function(){
 						player.loot(tile);
 					}else if($(tile).hasClass('spikes')){
 						console.log('spikes!');
+					}else if($(tile).hasClass('ladder')){
+						game.climb = true;
 					}else{
 						game.collision = true;
 						console.log('collide!');
 						return false;
 					}
+				}else if((player.x + player.w > tile_x) && (player.x < tile_x + tile_w) && (player.y + player.h >= tile_y) && (player.y <= tile_y + tile_h)){
+					if($(tile).hasClass('ladder')){
+						game.climb = true;
+					}else if($(tile).hasClass('platform')){
+						game.platform = true;
+					}
 				}else if((player.x + player.w > tile_x) && (player.x < tile_x + tile_w) && (player.y +  player.h < tile_y)){
-					game.fall = true;
-					console.log('fall!');
-					return false;
+					if(player.status != 'climbing'){
+						game.fall = true;
+						return false;
+					}
 				}
 				
 				
@@ -49,9 +62,11 @@ $(function(){
 	$('#game').append('<div id="score">Punkty: <span id="points">0</span></div>');
 	$('#board').append('<div class="background"></div>');
 
+
 	//dodaje bohatera
 	var player = {
 		div: $('<div id="player"></div>'),
+		status: 'stand',
 		move: function(action){
 			player.x = player.div.position().left;
 	 		player.y = player.div.position().top;
@@ -64,21 +79,24 @@ $(function(){
 
 						player.x -= 10;
 						game.collide(player);
-						if(!game.collision){
+						if(!game.collision && player.status != 'climbing'){
 							player.div.css('left', player.x + 'px');
+							player.status = 'walk';
 						}
 			   		}else if(player.x == 400 && $('div.first').position().left < 0){
-			   			$('.tile').css('left', '+=20px');
+			   			$('.tile').css('left', '+=5px');
 			   			game.collide(player);
-			   			if(game.collision){
-			   				$('.tile').css('left', '-=20px');
+			   			if(game.collision && player.status != 'climbing'){
+			   				$('.tile').css('left', '-=5px');
+			   				player.status = 'walk';
 			   			}
 			   		}else{
 			   			player.x -= 10;
 			   			if(player.x > 0){
 			   				game.collide(player);
-			   				if(!game.collision){
+			   				if(!game.collision && player.status != 'climbing'){
 			   					player.div.css('left', player.x + 'px');
+			   					player.status = 'walk';
 			   				}
 			   			}
 			   		}
@@ -88,43 +106,54 @@ $(function(){
 				//ruch w prawo
 				case 'right':{
 			   		if(player.x == 400 && $('div.last').position().left > 720){
-			   			$('.tile').css('left', '-=20px');
+			   			$('.tile').css('left', '-=5px');
 			   			game.collide(player);
-			   			if(game.collision){
-			   				$('.tile').css('left', '+=20px');
+			   			if(game.collision && player.status != 'climbing' ){
+			   				$('.tile').css('left', '+=5px');
+			   				player.status = 'walk';
 			   			}
 					}else{
 						player.x += 10;
 						if(player.x < 720){
 							game.collide(player);
-							if(!game.collision){
+							if(!game.collision && player.status != 'climbing'){
 								player.div.css('left', player.x + 'px');
+								player.status = 'walk';
 							}
 						}
 					}
 				}
 				break;
-				//skok
-				case 'jump':{
-					player.div.animate().stop();
-					player.y -= 180;
+				//wspinanie się
+				case 'climb':{
+					player.y -= 10;
+					game.collide(player);
+					console.log(player.status);
+					if(game.climb){
+						player.div.css('top', player.y + 'px');
+						player.status = 'climbing';
+					}else{
+						player.status = 'stand';
+					}
+				}
+				break;
+				//schodzenie w dół
+				case 'down':{
+					player.y += 10;
 					game.collide(player);
 					if(!game.collision){
-						player.div.animate({top: player.y});
-						if(game.fall){
-							player.move('fall');
+						if(game.climb){
+							player.div.css('top', player.y + 'px');
+							player.status = 'climbing';
 						}
+					}else{
+						player.status = 'stand';
 					}
 				}
 				break;
 				//spadanie
 				case 'fall':{
 					console.log('falling');
-					player.div.animate({top: player.y});
-					game.collide(player);
-					if(!game.collision){
-						player.y -= 180;
-					}
 				}
 				break;
 			};
@@ -136,7 +165,7 @@ $(function(){
 		},
 		die: function(){
 			player.div.fadeOut('slow');
-		}
+		},
 	};
 	$('#board').append(player.div);
 
@@ -144,9 +173,9 @@ $(function(){
 	var level = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-				 [0,0,0,0,0,0,3,4,0,0,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0,0],
-				 [0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,3,0,3,3,0,3,0,3,0,0],
-				 [0,0,2,2,4,0,0,0,2,0,0,0,2,0,0,0,0,4,0,0,2,0,0,0,4,2],
+				 [0,0,0,0,0,0,0,4,0,0,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0,0],
+				 [0,6,0,0,5,3,3,3,0,0,0,0,0,0,0,0,3,0,3,3,0,3,0,3,0,0],
+				 [0,6,2,2,4,0,0,0,2,0,0,0,2,0,0,0,0,4,0,0,2,0,0,0,4,2],
 				 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1]];
 
 	$.each(level, function(i, e){
@@ -164,6 +193,13 @@ $(function(){
 				}
 				if(tiles == 4){
 					tile.addClass('diamonds');
+				}
+				if(tiles == 5){
+					tile.addClass('platform');
+					tile.attr('id', 'platform1');
+				}
+				if(tiles == 6){
+					tile.addClass('ladder');
 				}
 			}
 		});
@@ -184,24 +220,33 @@ $(function(){
 	var gameLoop = function(){
 		if(game.keyboard[37]) { 
 	   		player.move('left');
-	   		game.inactive = false;
 	 	}
 	 	//strzałka w prawo
 	 	if(game.keyboard[39]) { 
 	   		player.move('right');
-	   		game.inactive = false;
 	 	}
 	 	//strzałka w górę
 	 	if(game.keyboard[38]) { 
-	   		player.move('jump');
-	   		game.inactive = false;
+	   		player.move('climb');
 	   	}
-	 	
-	 	if(game.inactive){
-	 		player.move('inactive');
+	   	//strzałka w górę
+	 	if(game.keyboard[40]) { 
+	   		player.move('down');
+	   	}
+
+	 	//poruszające się platformy
+	 	$('#board').find('.tile.platform').animate({left: "-=160"}, 5000).animate({left: "+=160"}, 5000);
+
+	 	if(game.platform == true && game.keyboard[39] == false && game.keyboard[37] == false){
+	 		console.log('on platform!');
+	 		player.x = $('#board').find('.tile.platform').position().left;
+	 		player.div.css('left', player.x + 'px');
+	 	}
+
+	 	if (game.fall == true){
+	 		player.move('fall');
 	 	}
 	}
-
 	setInterval(gameLoop, 30);
 	
 });

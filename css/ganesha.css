@@ -14,5 +14,7 @@ div#game div#board div{position:absolute;}
 div#game div#board div.background{top:0; left:0; overflow:hidden; width:800px; height:550px; background:#B7FBE4;}
 div#game div#board div.tile{top:0; left:0; width:80px; height:80px; background-color:pink; border:1px solid yellowgreen;}
 div#game div#board div.tile.spikes{background:url("../img/spikes.png") no-repeat 0 0; border:none;}
-div#game div#board div.tile.diamonds{background-color:#FF6666; border-radius:100px;}
-div#game div#board div#player{z-index:999; left:0; top:400px; width:80px; height:80px; background-color:yellowgreen; border-radius:100px;}
+div#game div#board div.tile.ladder{background:url("../img/ladder.png") no-repeat 0 0; border:none;}
+div#game div#board div.tile.platform{background:url("../img/platform.png") no-repeat 0 0;  height:40px; border:1px solid grey;}
+div#game div#board div.tile.diamonds{background:url("../img/diamond.png") no-repeat 0 0; border:none;}
+div#game div#board div#player{width:50px; height:20px; background: url("../img/ratatat.png") no-repeat 0px -20px; z-index:999; left:0; top:460px;}
