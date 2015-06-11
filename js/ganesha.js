@@ -75,6 +75,7 @@ $(function(){
 			switch(action){
 				//ruch w lewo
 				case 'left':{
+					setInterval(player.animate('left'), 30);
 					if( player.x > 400 && $('div.last').position().left === 720){
 
 						player.x -= 10;
@@ -105,6 +106,7 @@ $(function(){
 				break;
 				//ruch w prawo
 				case 'right':{
+					setInterval(player.animate('right'), 30);
 			   		if(player.x == 400 && $('div.last').position().left > 720){
 			   			$('.tile').css('left', '-=5px');
 			   			game.collide(player);
@@ -166,6 +168,23 @@ $(function(){
 		die: function(){
 			player.div.fadeOut('slow');
 		},
+		animate: function(direction){
+			switch(direction){
+				case 'left': {
+					for(i = 0; i < 3; i++){
+						console.log(i);
+						player.div.css('background-position', '-' + i * 50 + 'px 0px');
+					}
+				}
+				break;
+				case 'right': {
+					for(i = 0; i < 3; i++){
+						player.div.css('background-position', '-' + i * 50 + 'px -20px');
+					}
+				}
+				break;
+			}
+		}
 	};
 	$('#board').append(player.div);
 
