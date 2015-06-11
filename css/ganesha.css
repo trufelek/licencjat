@@ -9,6 +9,11 @@
 body{position:relative; height:100px; margin: 0 auto; font:24px "Joystix Monospace", monospace;}
 div#game{position: relative; margin:50px auto; width: 800px; height: 550px; overflow: hidden; background: #FF9999; -webkit-transform:translateZ(0); -moz-transform:translateZ(0); transform:matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)}
 div#game div#score{position:absolute; top:15px; left:15px;}
+div#game div#lives{position:absolute; top:20px; right:20px;}
+div#game div#lives span#hearts{float:right; width:100px; height:27px; }
+div#game div#lives span#hearts.three{background:url("../img/hearts3.png") no-repeat 0 0}
+div#game div#lives span#hearts.two{background:url("../img/hearts2.png") no-repeat 0 0}
+div#game div#lives span#hearts.one{background:url("../img/hearts1.png") no-repeat 0 0}
 div#game div#board{position:relative; width:1600px; height:550px;}
 div#game div#board div{position:absolute;}
 div#game div#board div.background{top:0; left:0; overflow:hidden; width:800px; height:550px; background:#B7FBE4;}
@@ -17,4 +22,5 @@ div#game div#board div.tile.spikes{background:url("../img/spikes.png") no-repeat
 div#game div#board div.tile.ladder{background:url("../img/ladder.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.platform{background:url("../img/platform.png") no-repeat 0 0;  height:40px; border:1px solid grey;}
 div#game div#board div.tile.diamonds{background:url("../img/diamond.png") no-repeat 0 0; border:none;}
-div#game div#board div#player{left:0px; top:0px; width:50px; height:20px; background: url("../img/ratatat.png") no-repeat 0px -20px; z-index:999;}
+div#game div#board div.tile.heart{background:url("../img/heart.png") no-repeat 0 0; border:none;}
+div#game div#board div#player{left:0px; top:460px; width:50px; height:20px; background: url("../img/ratatat.png") no-repeat 0px -20px; z-index:999;}
