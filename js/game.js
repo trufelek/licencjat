@@ -7,19 +7,26 @@ game = {
 	fall: false,
 	climb: false,
 	platform: false,
+	level: 'level1',
 	//funkcja inicjująca
-	init: function(){
+	init: function(level){
+		$('body').html('');
 		$('body').height(window.innerHeight - 50);
+		$('body').append("<div id='game'></div>");
 		$('#game').append('<div id="board"></div>');
 		$('#game').append('<div id="score">Punkty: <span id="points">0</span></div>');
 		$('#game').append('<div id="lives"><span id="hearts" class="three"></span></div>');
 		$('#board').append('<div class="background"></div>');
 
 		//rysuje mape kafelków
-		board.draw();
+		board.draw(level);
 
-		//dodaje bohatera
-		$('#board').append(player.div);
+		//ustawia poziom gry
+		if(level == 'level1'){
+			game.level = 'level1';
+		}else if (level == 'level2'){
+			game.level = 'level2';
+		}
 	},
 	//funkcja znajduje część wspólną
 	intersect: function(x1,x2,y1,y2){

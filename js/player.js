@@ -9,9 +9,6 @@ player = {
 	update: function(){
 		if(player.status == "dead"){
 			player.die();
-			player.status = "stand";
-			player.div.css('top', 460 + 'px').css('left', 0 + 'px');
-			player.div.fadeOut('slow').fadeIn('slow');
 		}else{
 			player.speed = Math.min(100,Math.max(-100, player.speed + player.acceleration * player.delta / 100.0)); 
 	        var x = player.div.position().left + player.motion;
@@ -134,6 +131,10 @@ player = {
 		$(diamond).remove();
 		game.points += 1;
 		$('#points').text(game.points);
+		if(game.points == 2){
+			$('body').html('');
+			startGame('level2');
+		}
 	},
 	heal: function(heart){
 		$(heart).remove();
@@ -149,15 +150,24 @@ player = {
 	},
 	die: function(){
 		player.lives --;
-		if(player.lives == 2){
-			$('#hearts').removeClass();
-			$('#hearts').addClass('two');
-		}else if(player.lives == 1){
-			$('#hearts').removeClass();
-			$('#hearts').addClass('one');
+		player.status = "stand";
+		if(player.lives > 0){
+			player.div.css('top', 460 + 'px').css('left', '-=100px');
+			player.div.fadeOut('slow').fadeIn('slow');
+			if(player.lives == 2){
+				$('#hearts').removeClass();
+				$('#hearts').addClass('two');
+			}else if(player.lives == 1){
+				$('#hearts').removeClass();
+				$('#hearts').addClass('one');
+			}
 		}else{
-			console.log('game over');
+			$('body').html('<div id="gameover"><h1>Koniec gry</h1><span id="retry">spróbuj ponownie</div>');
+			$("span#retry").on('click', function(){
+				startGame(game.level);
+			});
 		}
+
 	},
 	animate: function(direction){
 		switch(direction){

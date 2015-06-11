@@ -1,5 +1,5 @@
-$(function(){
-	game.init();
+function startGame(level){
+	game.init(level);
 
 	 $(document).keydown(function(e){
 	    game.keyboard[e.keyCode] = true;
@@ -57,4 +57,11 @@ $(function(){
 	 	}
 	}
 	setInterval(gameLoop, 30);
+
+};
+
+$('document').ready(function(){
+	$('#start h1').on('click', function(){
+		startGame('level1');
+	});
 });
