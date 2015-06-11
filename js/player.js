@@ -6,6 +6,10 @@ player = {
     motion : 0,
     delta: 30,
     lives: 3,
+    flipH: false,
+    flipV: false,
+    rotate: 0,
+    scale: 1,
 	update: function(){
 		if(player.status == "dead"){
 			player.die();
@@ -92,7 +96,7 @@ player = {
 			            	player.motion += 10;
 			            }
 					}
-					//game.transform(player.div);
+					//gf.transform(this.div, {flipH: true});
 			        player.div.css('background-position', '0px -20px');
 				}
 			}
