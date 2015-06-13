@@ -6,10 +6,9 @@ player = {
     motion : 0,
     delta: 30,
     lives: 3,
-    flipH: false,
-    flipV: false,
-    rotate: 0,
-    scale: 1,
+    frame: 0,
+    frames: 3,
+    flip: false,
 	update: function(){
 		if(player.status == "dead"){
 			player.die();
@@ -43,8 +42,7 @@ player = {
 	                 y -= diffy;
 	                 player.speed = 0;
 	                 if(player.status =="jump" && diffy > 0){
-	                    player.status="stand";
-	                    // gf.setAnimation(this.div, playerAnim.stand);
+	                    player.status ="stand";
 	                 }
 	            } else {
 	                // przesunięcie na osi X
@@ -61,72 +59,61 @@ player = {
 		switch(action){
 			//ruch w lewo
 			case 'left':{
-				if(player.status != "climbing"){
-					if(player.div.position().left > 400 && $('div.first').position().left < 0){
-			   			$('.tile').css('left', '+=5px');
-			   		}else{
-			   			if(player.status == "stand"){
-		            		//game.animate(player.div, walk, true);
-		            		status = "walk";
-		            		player.motion -= 10;
-			            }else if(player.status == "jump"){
-			            	player.motion -= 5;
-			            }else if(player.status == "walk"){
-			            	player.motion -= 10;
-			            }
-			   		}	
-		            //game.transform(player.div);
-		            player.div.css('background-position', '0px 0px');
-				}
+				player.flip = true;
+				if(player.div.position().left > 400 && $('div.first').position().left < 0){
+		   			$('.tile').css('left', '+=5px');
+		   			$(".background.front").css("background-position","+=5px 0px");
+		   			$(".background.back").css("background-position","+=5px 0px");
+		   			player.status = 'walk';
+		   		}else{
+		   			if(player.status == "stand"){
+	            		player.status = "walk";
+	            		player.motion -= 10;
+		            }else if(player.status == "jump"){
+		            	player.status = 'jump';
+		            	player.motion -= 5;
+		            }else if(player.status == "walk"){
+		            	player.status = 'walk';
+		            	player.motion -= 10;
+		            }
+		   		}	
 			}
 			break;
 			//ruch w prawo
 			case 'right':{
-				if(player.status != "climbing"){
-					if(player.div.position().left > 400 && $('div.last').position().left > 720){
-						$('.tile').css('left', '-=5px');
-					}else{
-						if(player.status == "stand"){
-			            	//game.animate(player.div, walk, true);
-			            	status = "walk";
-			            	player.motion += 10;
-			            }else if(player.status == "jump"){
-			            	player.motion += 5;
-			            }else if(player.status == "walk"){
-			            	player.motion += 10;
-			            }
-					}
-					//gf.transform(this.div, {flipH: true});
-			        player.div.css('background-position', '0px -20px');
+				player.flip = false;
+				if(player.div.position().left > 400 && $('div.last').position().left > 720){
+					$('.tile').css('left', '-=5px');
+					$(".background.front").css("background-position","-=5px 0px");
+		   			$(".background.back").css("background-position","-=5px 0px");
+					player.status = 'walk';
+				}else{
+					if(player.status == "stand"){
+		            	player.status = "walk";
+		            	player.motion += 10;
+		            }else if(player.status == "jump"){
+		            	player.status = 'jump';
+		            	player.motion += 5;
+		            }else if(player.status == "walk"){
+		            	player.status = 'walk';
+		            	player.motion += 10;
+		            }
 				}
 			}
 			break;
 			//skakanie
 			case 'jump':{
 				if(player.status == "stand" || player.status == "walk"){
-					//game.animate(player.div, jump, true);
 					player.status = "jump";
-					console.log(player.status);
 					player.speed = -60;
 				}
 			}
 			break;
 			//brak ruchu
-			case 'inactive':{
+			case 'stand':{
 				if(player.status == "walk"){
-					//game.animate(player.div, stand, false);
 					player.status = "stand";
 				}
-			}
-			break;
-			//wspinanie się
-			case 'climb':{
-				//...
-			}
-			break;
-			//schodzenie w dół
-			case 'down':{
-				//...
 			}
 			break;
 		};
@@ -135,8 +122,8 @@ player = {
 		$(diamond).remove();
 		game.points += 1;
 		$('#points').text(game.points);
-		if(game.points == 2){
-			$('body').html('');
+		if(game.points == 3){
+			clearInterval(game.loop);
 			startGame('level2');
 		}
 	},
@@ -156,7 +143,7 @@ player = {
 		player.lives --;
 		player.status = "stand";
 		if(player.lives > 0){
-			player.div.css('top', 460 + 'px').css('left', '-=100px');
+			player.div.css('top', 460 + 'px').css('left', '-=240px');
 			player.div.fadeOut('slow').fadeIn('slow');
 			if(player.lives == 2){
 				$('#hearts').removeClass();
@@ -168,26 +155,12 @@ player = {
 		}else{
 			$('body').html('<div id="gameover"><h1>Koniec gry</h1><span id="retry">spróbuj ponownie</div>');
 			$("span#retry").on('click', function(){
+				player.lives = 3;
+				game.points = 0;
+				clearInterval(game.loop);
 				startGame(game.level);
 			});
 		}
 
-	},
-	animate: function(direction){
-		switch(direction){
-			case 'left': {
-				for(i = 0; i < 3; i++){
-					console.log(i);
-					player.div.css('background-position', '-' + i * 50 + 'px 0px');
-				}
-			}
-			break;
-			case 'right': {
-				for(i = 0; i < 3; i++){
-					player.div.css('background-position', '-' + i * 50 + 'px -20px');
-				}
-			}
-			break;
-		}
 	}
-	};
+};

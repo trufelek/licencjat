@@ -10,23 +10,15 @@ game = {
 	level: 'level1',
 	//funkcja inicjująca
 	init: function(level){
-		$('body').html('');
-		$('body').height(window.innerHeight - 50);
-		$('body').append("<div id='game'></div>");
-		$('#game').append('<div id="board"></div>');
-		$('#game').append('<div id="score">Punkty: <span id="points">0</span></div>');
-		$('#game').append('<div id="lives"><span id="hearts" class="three"></span></div>');
-		$('#board').append('<div class="background"></div>');
-
-		//rysuje mape kafelków
-		board.draw(level);
-
 		//ustawia poziom gry
 		if(level == 'level1'){
 			game.level = 'level1';
 		}else if (level == 'level2'){
 			game.level = 'level2';
 		}
+		
+		//rysuje mape kafelków
+		board.draw(level);
 	},
 	//funkcja znajduje część wspólną
 	intersect: function(x1,x2,y1,y2){
@@ -48,7 +40,6 @@ game = {
 					console.log('diamond!');
 					player.loot(tile);
 				}else if($(tile).hasClass('heart')){
-					console.log(player.lives);
 					if(player.lives < 3){
 						player.heal(tile);
 					}
@@ -58,28 +49,44 @@ game = {
 				}else{
 					game.collisions.push(tile);
 				}
-			}
-
-
-			/*
-			if((player_x + player_w > tile_x) && (player_x < tile_x + tile_w) && (player_y + player_h > tile_y) && (player_y < tile_y + tile_h)){
-				if($(tile).hasClass('diamonds')){
-					console.log('diamond!');
-					player.loot(tile);
-				}else if($(tile).hasClass('spikes')){
-					console.log('spikes!');
-				}else if($(tile).hasClass('ladder')){
-					game.climb = true;
-				}else{
-					game.collisions.push(tile);
-					console.log('collide!');
-					console.log(tile);
-					return game.collisions;
-				}
-			}
-			*/
-			
+			}	
 		});
 	return game.collisions;	
+	},
+	animate: function(){
+		console.log(player.status);
+		var animation = player.status;
+		switch(animation){
+			case 'stand' : {
+				if(player.flip == true){
+					player.div.css('background-position', '0px -80px');
+				}else{
+					player.div.css('background-position', '0px 0px');
+				}
+			}
+			break;
+			case 'walk' :{
+				for(i=0; i < player.frames; i++){
+					if(player.flip == true){
+						player.div.css('background-position', '-' + player.frame * 80 + 'px -80px');
+					}else{
+						player.div.css('background-position', '-' + player.frame * 80 + 'px 0px');
+					}
+					player.frame ++;
+					if(player.frame > player.frames){
+						player.frame = (player.frame + 1) % player.frames;
+					}
+				}
+			}
+			break;
+			case 'jump':{
+				if(player.flip == true){
+					player.div.css('background-position', '0px -80px');
+				}else{
+					player.div.css('background-position', '0px 0px');
+				}
+			}
+			break;
+		}
 	}
 };

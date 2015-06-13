@@ -40,11 +40,12 @@ function startGame(level){
 
 	 	//brak akcji
 	   	if(inactive){
-	   		player.status = 'stand';
+	   		player.move('stand');
 	   	}
 
-	   	//akutalizuje stan i pozycję gracza
+	   	//akutalizuje pozycję i animację gracza
 	   	player.update();
+	   	game.animate();
 
 	 	//poruszające się platformy
 	 	$('#board').find('.tile.platform').animate({left: "-=160"}, 5000).animate({left: "+=160"}, 5000);
@@ -56,7 +57,7 @@ function startGame(level){
 	 		player.div.css('left', player.x + 'px');
 	 	}
 	}
-	setInterval(gameLoop, 30);
+	game.loop = setInterval(gameLoop, 30);
 
 };
 
