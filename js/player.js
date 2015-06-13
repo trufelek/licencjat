@@ -62,8 +62,8 @@ player = {
 				player.flip = true;
 				if(player.div.position().left > 400 && $('div.first').position().left < 0){
 		   			$('.tile').css('left', '+=5px');
-		   			$(".background.front").css("background-position","+=5px 0px");
-		   			$(".background.back").css("background-position","+=5px 0px");
+		   			$(".background.front").css("background-position","+=4px 0px");
+		   			$(".background.back").css("background-position","+=2px 0px");
 		   			player.status = 'walk';
 		   		}else{
 		   			if(player.status == "stand"){
@@ -84,8 +84,8 @@ player = {
 				player.flip = false;
 				if(player.div.position().left > 400 && $('div.last').position().left > 720){
 					$('.tile').css('left', '-=5px');
-					$(".background.front").css("background-position","-=5px 0px");
-		   			$(".background.back").css("background-position","-=5px 0px");
+					$(".background.front").css("background-position","-=4px 0px");
+		   			$(".background.back").css("background-position","-=2px 0px");
 					player.status = 'walk';
 				}else{
 					if(player.status == "stand"){

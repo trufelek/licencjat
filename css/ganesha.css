@@ -30,7 +30,9 @@ div#game div#board div.background.back.level1{background:url("../img/back1.png")
 div#game div#board div.background.front.level2{background:url("../img/front2.png") repeat; background-position: 0px 0px;}
 div#game div#board div.background.back.level2{background:url("../img/back2.png") repeat; background-position: 0px 0px;}
 
-div#game div#board div.tile{top:0; left:0; width:80px; height:80px; background-color:pink; border:1px solid yellowgreen;}
+div#game div#board div.tile{top:0; left:0; width:80px; height:80px;}
+div#game div#board div.tile.level1{background-color:pink; border:1px solid yellowgreen;}
+div#game div#board div.tile.level2{background-color:#FF9966; border:1px solid grey;}
 div#game div#board div.tile.spikes{background:url("../img/spikes.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.ladder{background:url("../img/ladder.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.platform{background:url("../img/platform.png") no-repeat 0 0;  height:40px; border:1px solid grey;}
