@@ -9,7 +9,7 @@ game = {
 	platform: false,
 	level: 'level1',
 	//funkcja inicjująca
-	init: function(level){
+	init: function(level, points, lives){
 		//ustawia poziom gry
 		if(level == 'level1'){
 			game.level = 'level1';
@@ -17,8 +17,20 @@ game = {
 			game.level = 'level2';
 		}
 		
+		game.points = points;
+
 		//rysuje mape kafelków
-		board.draw(level);
+		board.draw(level, function(){
+			$('#points').text(game.points);
+
+			if(lives == 2){
+				$('#hearts').removeClass();
+				$('#hearts').addClass('two');
+			}else if(lives == 1){
+				$('#hearts').removeClass();
+				$('#hearts').addClass('one');
+			}
+		});
 	},
 	//funkcja znajduje część wspólną
 	intersect: function(x1,x2,y1,y2){
@@ -54,7 +66,6 @@ game = {
 	return game.collisions;	
 	},
 	animate: function(){
-		console.log(player.status);
 		var animation = player.status;
 		switch(animation){
 			case 'stand' : {

@@ -123,8 +123,11 @@ player = {
 		game.points += 1;
 		$('#points').text(game.points);
 		if(game.points == 3){
-			clearInterval(game.loop);
-			startGame('level2');
+			$('body').html('<div id="nxtlvl"><h1>Kolejny poziom!</h1><span id="nxt">dalej</div>');
+			$("span#nxt").on('click', function(){
+				clearInterval(game.loop);
+				startGame('level2', game.points, player.lives);
+			});
 		}
 	},
 	heal: function(heart){
@@ -155,10 +158,8 @@ player = {
 		}else{
 			$('body').html('<div id="gameover"><h1>Koniec gry</h1><span id="retry">spróbuj ponownie</div>');
 			$("span#retry").on('click', function(){
-				player.lives = 3;
-				game.points = 0;
 				clearInterval(game.loop);
-				startGame(game.level);
+				startGame(game.level, 0, 3);
 			});
 		}
 

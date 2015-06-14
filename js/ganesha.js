@@ -1,5 +1,5 @@
-function startGame(level){
-	game.init(level);
+function startGame(level, points, lives){
+	game.init(level, points, lives);
 
 	 $(document).keydown(function(e){
 	    game.keyboard[e.keyCode] = true;
@@ -46,23 +46,14 @@ function startGame(level){
 	   	//akutalizuje pozycję i animację gracza
 	   	player.update();
 	   	game.animate();
-
-	 	//poruszające się platformy
-	 	$('#board').find('.tile.platform').animate({left: "-=160"}, 5000).animate({left: "+=160"}, 5000);
-
-	 	//postać porusza się wraz z platformą jeśli na niej stoi bezczynnie
-	 	if(game.platform == true && game.keyboard[39] == false && game.keyboard[37] == false){
-	 		console.log('on platform!');
-	 		player.x = $('#board').find('.tile.platform').position().left;
-	 		player.div.css('left', player.x + 'px');
-	 	}
 	}
+
 	game.loop = setInterval(gameLoop, 30);
 
 };
 
 $('document').ready(function(){
 	$('#start h1').on('click', function(){
-		startGame('level1');
+		startGame('level1', 0, 3);
 	});
 });
