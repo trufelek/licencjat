@@ -1,20 +1,20 @@
 @font-face {
   font-family: 'Joystix Monospace';
-  src: url('joystix.eot') format('embedded-opentype'), 
-       url('joystix.woff2') format('woff2'),
-       url('joystix.woff') format('woff'), 
-       url('joystix.ttf')  format('truetype'),
+  src: url('../fonts/joystix.eot') format('embedded-opentype'), 
+       url('../fonts/joystix.woff2') format('woff2'),
+       url('../fonts/joystix.woff') format('woff'), 
+       url('../fonts/joystix.ttf') format('truetype'),
 }
 
 .hide{display:none;}
 
-body{position:relative; height:100px; margin: 0 auto; font:24px "Joystix Monospace", monospace;}
+body{position:relative; font:24px "Joystix Monospace", monospace;}
 
-div#start{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
+div#start{position:relative; margin:25px auto; width: 800px; height: 600px; background: #000;}
 div#start h1{text-align:center; cursor:pointer; position:relative; color:#FF9999; top:50%; transform:translateY(-50%);}
 div#start h1:hover{color:yellowgreen;}
 
-div#game{position: relative; margin:50px auto; width: 800px; height: 550px; overflow: hidden; background: #FF9999; -webkit-transform:translateZ(0); -moz-transform:translateZ(0); transform:matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)}
+div#game{position: relative; margin:25px auto; width: 800px; height: 600px; overflow: hidden; background: #FF9999; -webkit-transform:translateZ(0); -moz-transform:translateZ(0); transform:matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)}
 div#game div#score{position:absolute; top:15px; left:15px;}
 div#game div#lives{position:absolute; top:20px; right:20px;}
 div#game div#lives span#hearts{float:right; width:100px; height:27px; }
@@ -22,28 +22,37 @@ div#game div#lives span#hearts.three{background:url("../img/hearts3.png") no-rep
 div#game div#lives span#hearts.two{background:url("../img/hearts2.png") no-repeat 0 0}
 div#game div#lives span#hearts.one{background:url("../img/hearts1.png") no-repeat 0 0}
 
-div#game div#board{position:relative; width:1600px; height:550px;}
+div#game div#board{position:relative; width:1600px; height:600px;}
 div#game div#board div{position:absolute;}
-div#game div#board div.background{top:0; left:0; overflow:hidden; width:800px; height:550px; background:#B7FBE4;}
+div#game div#board div.background{top:0; left:0; overflow:hidden; width:800px; height:600px; background:#B7FBE4;}
 div#game div#board div.background.front.level1{background:url("../img/front1.png") repeat; background-position: 0px 0px;}
 div#game div#board div.background.back.level1{background:url("../img/back1.png") repeat; background-position: 0px 0px;}
 div#game div#board div.background.front.level2{background:url("../img/front2.png") repeat; background-position: 0px 0px;}
 div#game div#board div.background.back.level2{background:url("../img/back2.png") repeat; background-position: 0px 0px;}
+div#game div#board div.background.front.level3{background:url("../img/front3.png") repeat; background-position: 0px 0px;}
+div#game div#board div.background.back.level3{background:url("../img/back3.png") repeat; background-position: 0px 0px;}
 
 div#game div#board div.tile{top:0; left:0; width:80px; height:80px;}
 div#game div#board div.tile.level1{background-color:pink; border:1px solid yellowgreen;}
 div#game div#board div.tile.level2{background-color:#FF9966; border:1px solid grey;}
+div#game div#board div.tile.level3{background-color:#78FACF; border:1px solid pink;}
 div#game div#board div.tile.spikes{background:url("../img/spikes.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.ladder{background:url("../img/ladder.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.platform{background:url("../img/platform.png") no-repeat 0 0;  height:40px; border:1px solid grey;}
 div#game div#board div.tile.diamonds{background:url("../img/diamond.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.heart{background:url("../img/heart.png") no-repeat 0 0; border:none;}
+div#game div#board div.tile.love{background:url("../img/love.png") no-repeat 0 0; border:none;}
 div#game div#board div#player{left:0px; top:0px; width:80px; height:50px; background: url("../img/rats.png") no-repeat 0px 0px; z-index:999;}
 
 div#nxtlvl{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
 div#nxtlvl h1{text-align:center; position:relative; color:#FF9999; top:40%; transform:translateY(-50%);}
 div#nxtlvl span#nxt{display:block; cursor:pointer; color:yellowgreen;  text-align:center; position:relative; top:45%; transform:translateY(-50%);}
 div#nxtlvl span#nxt:hover{color:cyan;}
+
+div#win{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
+div#win h1{text-align:center; position:relative; color:#FF9999; top:40%; transform:translateY(-50%);}
+div#win span#again{display:block; cursor:pointer; color:yellowgreen;  text-align:center; position:relative; top:45%; transform:translateY(-50%);}
+div#win span#again:hover{color:cyan;}
 
 div#gameover{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
 div#gameover h1{text-align:center; position:relative; color:#FF9999; top:40%; transform:translateY(-50%);}

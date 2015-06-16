@@ -15,6 +15,8 @@ game = {
 			game.level = 'level1';
 		}else if (level == 'level2'){
 			game.level = 'level2';
+		}else if(level == 'level3'){
+			game.level = 'level3';
 		}
 		
 		game.points = points;
@@ -49,15 +51,15 @@ game = {
 
 			if((player_x + player_w > tile_x) && (player_x < tile_x + tile_w) && (player_y + player_h > tile_y) && (player_y < tile_y + tile_h)){
 				if($(tile).hasClass('diamonds')){
-					console.log('diamond!');
 					player.loot(tile);
 				}else if($(tile).hasClass('heart')){
 					if(player.lives < 3){
 						player.heal(tile);
 					}
 				}else if($(tile).hasClass('spikes')){
-					console.log('spikes!');
 					player.status = "dead";
+				}else if($(tile).hasClass('love')){
+					player.status = "win";
 				}else{
 					game.collisions.push(tile);
 				}

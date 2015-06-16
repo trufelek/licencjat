@@ -12,6 +12,8 @@ player = {
 	update: function(){
 		if(player.status == "dead"){
 			player.die();
+		}else if(player.status == "win"){
+			player.win();
 		}else{
 			player.speed = Math.min(100,Math.max(-100, player.speed + player.acceleration * player.delta / 100.0)); 
 	        var x = player.div.position().left + player.motion;
@@ -49,8 +51,9 @@ player = {
 	                y -= diffx;
 	            }
 	        }
-	      
-	      	player.div.css('left', x);
+	      	if(x > 0 && x < 720){
+	      		player.div.css('left', x);
+	      	}
 	      	player.div.css('top', y);
 	      	player.motion = 0;
 		}
@@ -123,10 +126,16 @@ player = {
 		game.points += 1;
 		$('#points').text(game.points);
 		if(game.points == 3){
-			$('body').html('<div id="nxtlvl"><h1>Kolejny poziom!</h1><span id="nxt">dalej</div>');
+			$('body').html('<div id="nxtlvl"><h1>Poziom drugi</h1><span id="nxt">dalej</span></div>');
 			$("span#nxt").on('click', function(){
 				clearInterval(game.loop);
 				startGame('level2', game.points, player.lives);
+			});
+		}else if(game.points == 7){
+			$('body').html('<div id="nxtlvl"><h1>Poziom trzeci</h1><span id="nxt">dalej</span></div>');
+			$("span#nxt").on('click', function(){
+				clearInterval(game.loop);
+				startGame('level3', game.points, player.lives);
 			});
 		}
 	},
@@ -146,8 +155,8 @@ player = {
 		player.lives --;
 		player.status = "stand";
 		if(player.lives > 0){
-			player.div.css('top', 460 + 'px').css('left', '-=240px');
-			player.div.fadeOut('slow').fadeIn('slow');
+			clearInterval(game.loop);
+			startGame(game.level, game.points, player.lives);
 			if(player.lives == 2){
 				$('#hearts').removeClass();
 				$('#hearts').addClass('two');
@@ -156,12 +165,20 @@ player = {
 				$('#hearts').addClass('one');
 			}
 		}else{
-			$('body').html('<div id="gameover"><h1>Koniec gry</h1><span id="retry">spróbuj ponownie</div>');
+			$('body').html('<div id="gameover"><h1>Koniec gry</h1><span id="retry">spróbuj ponownie</span></div>');
 			$("span#retry").on('click', function(){
 				clearInterval(game.loop);
-				startGame(game.level, 0, 3);
+				startGame('level1', 0, 3);
 			});
 		}
 
+	},
+	win: function(){
+		$('body').html('<div id="win"><h1>Gratulacje!</h1><span id="again">zagraj ponownie</span></div>');
+		$("span#again").on('click', function(){
+			console.log('aa');
+			clearInterval(game.loop);
+			startGame('level1', 0, 3);
+		});
 	}
 };
