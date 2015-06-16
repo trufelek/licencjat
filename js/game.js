@@ -4,9 +4,6 @@ game = {
 	keyboard: [],
 	points: 0,
 	collisions: [],
-	fall: false,
-	climb: false,
-	platform: false,
 	level: 'level1',
 	//funkcja inicjująca
 	init: function(level, points, lives){

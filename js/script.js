@@ -27,16 +27,6 @@ function startGame(level, points, lives){
 	   		player.move('jump');
 	   		inactive = false;
 	   	}
-	   	//strzałka w dół
-	 	if(game.keyboard[40]) { 
-	   		player.move('down');
-	   		inactive = false;
-	   	}
-
-	   	//spadanie
-	   	if (game.fall == true){
-	 		player.move('fall');
-	 	}
 
 	 	//brak akcji
 	   	if(inactive){
@@ -54,6 +44,6 @@ function startGame(level, points, lives){
 
 $('document').ready(function(){
 	$('#start h1').on('click', function(){
-		startGame('level1', 0, 3);
+		startGame('level3', 0, 3);
 	});
 });
