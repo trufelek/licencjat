@@ -44,6 +44,6 @@ function startGame(level, points, lives){
 
 $('document').ready(function(){
 	$('#start h1').on('click', function(){
-		startGame('level3', 0, 3);
+		startGame('level1', 0, 3);
 	});
 });
