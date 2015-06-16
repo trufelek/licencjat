@@ -17,11 +17,11 @@ game = {
 		}
 		
 		game.points = points;
+		player.lives = lives;
 
 		//rysuje mape kafelków
 		board.draw(level, function(){
 			$('#points').text(game.points);
-
 			if(lives == 2){
 				$('#hearts').removeClass();
 				$('#hearts').addClass('two');

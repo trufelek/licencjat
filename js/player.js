@@ -156,7 +156,17 @@ player = {
 		player.status = "stand";
 		if(player.lives > 0){
 			clearInterval(game.loop);
-			startGame(game.level, game.points, player.lives);
+				var points;
+			if(game.level == 'level1'){
+				points = 0;
+			}else if (game.level == 'level2'){
+				points = 3;
+			}else if(game.level == 'level3'){
+				points = 7;
+			}
+			
+			startGame(game.level, points, player.lives);
+
 			if(player.lives == 2){
 				$('#hearts').removeClass();
 				$('#hearts').addClass('two');
@@ -174,11 +184,6 @@ player = {
 
 	},
 	win: function(){
-		$('body').html('<div id="win"><h1>Gratulacje!</h1><span id="again">zagraj ponownie</span></div>');
-		$("span#again").on('click', function(){
-			console.log('aa');
-			clearInterval(game.loop);
-			startGame('level1', 0, 3);
-		});
+		$('body').html('<div id="win"><h1>Gratulacje!</h1></div>');
 	}
 };

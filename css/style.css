@@ -42,7 +42,7 @@ div#game div#board div.tile.platform{background:url("../img/platform.png") no-re
 div#game div#board div.tile.diamonds{background:url("../img/diamond.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.heart{background:url("../img/heart.png") no-repeat 0 0; border:none;}
 div#game div#board div.tile.love{background:url("../img/love.png") no-repeat 0 0; border:none;}
-div#game div#board div#player{left:0px; top:0px; width:80px; height:50px; background: url("../img/rats.png") no-repeat 0px 0px; z-index:999;}
+div#game div#board div#player{left:0px; top:0px; width:80px; height:80px; background: url("../img/rats.png") no-repeat 0px 0px; z-index:999;}
 
 div#nxtlvl{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
 div#nxtlvl h1{text-align:center; position:relative; color:#FF9999; top:40%; transform:translateY(-50%);}
