@@ -1,14 +1,15 @@
 @font-face {
-  font-family: 'Joystix Monospace';
-  src: url('../fonts/joystix.eot') format('embedded-opentype'), 
+  font-family: Joystix;
+  src: url('../fonts/joystix.otf'),
+	   url('../fonts/joystix.eot') format('embedded-opentype'), 
        url('../fonts/joystix.woff2') format('woff2'),
        url('../fonts/joystix.woff') format('woff'), 
-       url('../fonts/joystix.ttf') format('truetype'),
+       url('../fonts/joystix.ttf') format('truetype');
 }
 
 .hide{display:none;}
 
-body{position:relative; font:24px "Joystix Monospace", monospace;}
+body{position:relative; font-family:"Joystix"; font-size:24px, monospace;}
 
 div#start{position:relative; margin:25px auto; width: 800px; height: 600px; background: #000;}
 div#start h1{text-align:center; cursor:pointer; position:relative; color:#FF9999; top:50%; transform:translateY(-50%);}
