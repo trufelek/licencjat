@@ -33,10 +33,10 @@ game = {
 	},
 	//funkcja znajduje część wspólną
 	intersect: function(x1,x2,y1,y2){
-  		var i1 = Math.min(Math.max(x1, y1), x2);
-    	var i2 = Math.max(Math.min(x2, y2), x1);
-    	return [i1, i2];
-	}, 
+		var i1 = Math.min(Math.max(x1, y1), x2);
+		var i2 = Math.max(Math.min(x2, y2), x1);
+		return [i1, i2];
+	},
 	//detekcja kolizji
 	collide: function(player_x, player_y, player_w, player_h){
 		game.collisions = [];
