@@ -9,7 +9,16 @@
 
 .hide{display:none;}
 
-body{position:relative; font-family:"Joystix"; font-size:24px, monospace;}
+body{position:relative; font-family:"Joystix"; font-size:24px, monospace; height:100%;}
+
+span#info{font-size:36px; position:absolute; right:90px; bottom:50px; display:block; background-color:#FF9999; border:1px solid #FF9999; border-radius:100%; height:50px; width:50px;}
+span#info a{text-decoration:none; color:#FFF; display:block; text-align:center;}
+
+div.info{width:50%; margin:50px auto;}
+div.info h1{position:relative; color:#FF9999; text-align:center;}
+div.info p{position:relative; text-align:center;}
+div.info img{display:block; margin:10px auto;}
+div.info a{text-decoration:none; color:#FF9999; font-size:24px; display:block; margin:50px auto; text-align:center;}
 
 div#start{position:relative; margin:25px auto; width: 800px; height: 600px; background: #000;}
 div#start h1{text-align:center; cursor:pointer; position:relative; color:#FF9999; top:50%; transform:translateY(-50%);}
@@ -45,17 +54,17 @@ div#game div#board div.tile.heart{background:url("../img/heart.png") no-repeat 0
 div#game div#board div.tile.love{background:url("../img/love.png") no-repeat 0 0; border:none;}
 div#game div#board div#player{left:0px; top:0px; width:80px; height:80px; background: url("../img/rats.png") no-repeat 0px 0px; z-index:999;}
 
-div#nxtlvl{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
+div#nxtlvl{position:relative; margin:25px auto; width: 800px; height: 600px; background: #000;}
 div#nxtlvl h1{text-align:center; position:relative; color:#FF9999; top:40%; transform:translateY(-50%);}
 div#nxtlvl span#nxt{display:block; cursor:pointer; color:yellowgreen;  text-align:center; position:relative; top:45%; transform:translateY(-50%);}
 div#nxtlvl span#nxt:hover{color:cyan;}
 
-div#win{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
-div#win h1{text-align:center; position:relative; color:#FF9999; top:40%; transform:translateY(-50%);}
+div#win{position:relative; margin:25px auto; width: 800px; height: 600px; background: #000;}
+div#win h1{text-align:center; position:relative; color:#FF9999; top:50%; transform:translateY(-50%);}
 div#win span#again{display:block; cursor:pointer; color:yellowgreen;  text-align:center; position:relative; top:45%; transform:translateY(-50%);}
 div#win span#again:hover{color:cyan;}
 
-div#gameover{position:relative; margin:50px auto; width: 800px; height: 550px; background: #000;}
+div#gameover{position:relative; margin:25px auto; width: 800px; height: 600px; background: #000;}
 div#gameover h1{text-align:center; position:relative; color:#FF9999; top:40%; transform:translateY(-50%);}
 div#gameover span#retry{display:block; cursor:pointer; color:yellowgreen;  text-align:center; position:relative; top:45%; transform:translateY(-50%);}
 div#gameover span#retry:hover{color:cyan;}

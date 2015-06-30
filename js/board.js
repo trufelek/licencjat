@@ -27,7 +27,8 @@ board = {
 			 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],
 	draw: function(level, callback){
 		$('body').html('');
-		$('body').height(window.innerHeight - 50);
+		//$('body').height(window.innerHeight - 50);
+		$('body').append("<span id='info'><a href='info.html'>?</a></span>");
 		$('body').append("<div id='game'></div>");
 		$('#game').append('<div id="board"></div>');
 		$('#game').append('<div id="score">Punkty: <span id="points">0</span></div>');

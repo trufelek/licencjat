@@ -127,12 +127,14 @@ player = {
 		$('#points').text(game.points);
 		if(game.points == 3){
 			$('body').html('<div id="nxtlvl"><h1>Poziom drugi</h1><span id="nxt">dalej</span></div>');
+			$('body').append("<span id='info'><a href='info.html'>?</a></span>");
 			$("span#nxt").on('click', function(){
 				clearInterval(game.loop);
 				startGame('level2', game.points, player.lives);
 			});
 		}else if(game.points == 7){
 			$('body').html('<div id="nxtlvl"><h1>Poziom trzeci</h1><span id="nxt">dalej</span></div>');
+			$('body').append("<span id='info'><a href='info.html'>?</a></span>");
 			$("span#nxt").on('click', function(){
 				clearInterval(game.loop);
 				startGame('level3', game.points, player.lives);
@@ -176,6 +178,7 @@ player = {
 			}
 		}else{
 			$('body').html('<div id="gameover"><h1>Koniec gry</h1><span id="retry">spróbuj ponownie</span></div>');
+			$('body').append("<span id='info'><a href='info.html'>?</a></span>");
 			$("span#retry").on('click', function(){
 				clearInterval(game.loop);
 				startGame('level1', 0, 3);
@@ -185,5 +188,6 @@ player = {
 	},
 	win: function(){
 		$('body').html('<div id="win"><h1>Gratulacje!</h1></div>');
+		$('body').append("<span id='info'><a href='info.html'>?</a></span>");
 	}
 };
